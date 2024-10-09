@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flickd_app/models/app_config.dart';
+import 'package:flickd_app/services/http_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -33,6 +33,9 @@ class _SplashPageState extends State<SplashPage> {
           BASE_API_URL: configData['BASE_API_URL'],
           BASE_IMAGE_API_URL: configData['BASE_IMAGE_API_URL'],
           API_KEY: configData['API_KEY']),
+    );
+    getIt.registerSingleton<HTTPService>(
+      HTTPService(),
     );
   }
 

@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:flickd_app/models/app_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key, required this.onInitializationComplete});
@@ -12,12 +17,29 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5))
-        .then((_) => widget.onInitializationComplete());
+    Future.delayed(const Duration(seconds: 5)).then(
+      (_) => _setUp(context).then(
+        (_) => widget.onInitializationComplete(),
+      ),
+    );
   }
+
+  Future<void> _setUp(BuildContext context) async {
+    final getIt = GetIt.instance;
+    final configFile = await rootBundle.loadString('assets/config/main.json');
+    final configData = jsonDecode(configFile);
+    getIt.registerSingleton<AppConfig>(
+      AppConfig(
+          BASE_API_URL: configData['BASE_API_URL'],
+          BASE_IMAGE_API_URL: configData['BASE_IMAGE_API_URL'],
+          API_KEY: configData['API_KEY']),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'flickd_app',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Center(

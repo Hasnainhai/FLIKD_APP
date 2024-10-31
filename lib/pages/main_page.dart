@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flickd_app/models/search_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -85,6 +86,7 @@ class MainPage extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _searchFieldWidget(),
+            _categorySelectionWidget(),
           ],
         ),
       ),
@@ -113,5 +115,40 @@ class MainPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Widget _categorySelectionWidget() {
+    return DropdownButton(
+        underline: Container(),
+        icon: const Icon(
+          Icons.menu,
+          color: Colors.white,
+        ),
+        value: SearchCategory.popular,
+        dropdownColor: Colors.black54,
+        items: [
+          DropdownMenuItem(
+            value: SearchCategory.popular,
+            child: Text(
+              SearchCategory.popular,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          DropdownMenuItem(
+            value: SearchCategory.newItems,
+            child: Text(
+              SearchCategory.newItems,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          DropdownMenuItem(
+            value: SearchCategory.none,
+            child: Text(
+              SearchCategory.none,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
+        onChanged: (value) {});
   }
 }

@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// ignore: must_be_immutable
 class MainPage extends ConsumerWidget {
   late double _deviceHeight;
   late double _devicewidth;

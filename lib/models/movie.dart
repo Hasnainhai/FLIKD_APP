@@ -32,7 +32,7 @@ class Movie {
         releaseDate: _json['release_date']);
   }
   String posterURL() {
-    AppConfig _appConfig = GetIt.instance.get<AppConfig>();
-    return '${_appConfig.BASE_IMAGE_API_URL}${this.posterPath}';
+    AppConfig appConfig = GetIt.instance.get<AppConfig>();
+    return '${appConfig.BASE_IMAGE_API_URL}$posterPath';
   }
 }

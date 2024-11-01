@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flickd_app/models/movie.dart';
 import 'package:flickd_app/models/search_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -70,6 +71,11 @@ class MainPage extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _topBarWidget(),
+          Container(
+            height: _deviceHeight * 0.83,
+            padding: const EdgeInsets.symmetric(vertical: 0.01),
+            child: _movieListViewWidget(),
+          ),
         ],
       ),
     );
@@ -126,29 +132,70 @@ class MainPage extends ConsumerWidget {
         ),
         value: SearchCategory.popular,
         dropdownColor: Colors.black54,
-        items: [
+        items: const [
           DropdownMenuItem(
             value: SearchCategory.popular,
             child: Text(
               SearchCategory.popular,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           DropdownMenuItem(
             value: SearchCategory.newItems,
             child: Text(
               SearchCategory.newItems,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white),
             ),
           ),
           DropdownMenuItem(
             value: SearchCategory.none,
             child: Text(
               SearchCategory.none,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ],
         onChanged: (value) {});
+  }
+
+  Widget _movieListViewWidget() {
+    List<Movie> _movies = [];
+
+    for (var i = 0; i <= 20; i++) {
+      _movies.add(Movie(
+          name: 'hasnain',
+          language: 'urdu',
+          isAdult: true,
+          description: 'hasna movie is a great movie you have to watch it once',
+          posterPath: 'posterPath',
+          backdropPath: 'backdropPath',
+          rating: 7.7,
+          releaseDate: '20-1-23'));
+    }
+
+    if (_movies.length != 0) {
+      return ListView.builder(
+          itemCount: _movies.length,
+          itemBuilder: (BuildContext context, int _count) {
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                  vertical: _deviceHeight * 0.01, horizontal: 0),
+              child: GestureDetector(
+                child: Text(
+                  _movies[_count].name.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            );
+          });
+    } else {
+      return const Center(
+        child: CircularProgressIndicator(
+          backgroundColor: Colors.white,
+        ),
+      );
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flickd_app/models/movie.dart';
 import 'package:flickd_app/models/search_category.dart';
+import 'package:flickd_app/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -167,13 +168,13 @@ class MainPage extends ConsumerWidget {
           language: 'urdu',
           isAdult: true,
           description: 'hasna movie is a great movie you have to watch it once',
-          posterPath: 'posterPath',
-          backdropPath: 'backdropPath',
+          posterPath: 'assets/images/bg.png',
+          backdropPath: 'assets/images/bg.png',
           rating: 7.7,
           releaseDate: '20-1-23'));
     }
 
-    if (_movies.length != 0) {
+    if (_movies.isNotEmpty) {
       return ListView.builder(
           itemCount: _movies.length,
           itemBuilder: (BuildContext context, int _count) {
@@ -181,12 +182,10 @@ class MainPage extends ConsumerWidget {
               padding: EdgeInsets.symmetric(
                   vertical: _deviceHeight * 0.01, horizontal: 0),
               child: GestureDetector(
-                child: Text(
-                  _movies[_count].name.toString(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
+                child: MovieTile(
+                    movie: _movies[_count],
+                    height: _deviceHeight * 0.20,
+                    width: 0.85),
               ),
             );
           });

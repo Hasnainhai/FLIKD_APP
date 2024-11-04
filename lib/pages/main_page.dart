@@ -25,6 +25,7 @@ class MainPage extends ConsumerWidget {
 
   Widget _buildUI() {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: Container(
         color: Colors.black,
@@ -65,10 +66,10 @@ class MainPage extends ConsumerWidget {
   Widget _foregroundWidgets() {
     return Container(
       padding: EdgeInsets.fromLTRB(0.0, _deviceHeight * 0.02, 0.0, 0.0),
-      width: _deviceHeight * 0.88,
+      width: _devicewidth * 0.88,
       child: Column(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _topBarWidget(),
@@ -162,7 +163,7 @@ class MainPage extends ConsumerWidget {
   Widget _movieListViewWidget() {
     List<Movie> _movies = [];
 
-    for (var i = 0; i <= 20; i++) {
+    for (var i = 0; i < 20; i++) {
       _movies.add(Movie(
           name: 'hasnain',
           language: 'urdu',
@@ -185,7 +186,7 @@ class MainPage extends ConsumerWidget {
                 child: MovieTile(
                     movie: _movies[_count],
                     height: _deviceHeight * 0.20,
-                    width: 0.85),
+                    width: _devicewidth * 0.85),
               ),
             );
           });

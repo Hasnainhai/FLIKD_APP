@@ -29,17 +29,6 @@ class MovieTile extends StatelessWidget {
     );
   }
 
-  Widget _moviePosterWidget(String imageUrl) {
-    return Container(
-      height: height,
-      width: width,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/bg.png'), fit: BoxFit.cover),
-      ),
-    );
-  }
-
   Widget _movieInfoWidget() {
     return Container(
       height: height,
@@ -76,6 +65,17 @@ class MovieTile extends StatelessWidget {
             ],
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _moviePosterWidget(String imageUrl) {
+    return Container(
+      height: height,
+      width: width,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/images/bg.png'), fit: BoxFit.contain),
       ),
     );
   }

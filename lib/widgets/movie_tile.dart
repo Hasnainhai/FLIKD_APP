@@ -22,7 +22,7 @@ class MovieTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _moviePosterWidget('assets/images/bg.png'),
+          _moviePosterWidget(movie.posterURL()),
           _movieInfoWidget(),
         ],
       ),
@@ -89,10 +89,9 @@ class MovieTile extends StatelessWidget {
     return Container(
       height: height,
       width: width * 0.35,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(imageUrl),
-        ),
+            image: AssetImage('assets/images/bg.png'), fit: BoxFit.contain),
       ),
     );
   }

@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:flickd_app/models/movie.dart';
 import 'package:flickd_app/services/http_services.dart';
 import 'package:get_it/get_it.dart';
 
@@ -6,5 +8,19 @@ class MovieServices {
   HTTPService? _http;
   MovieServices() {
     _http = getIt.get<HTTPService>();
+  }
+  Future<List<Movie>> getPopularMovies({int? page}) async {
+    Response response =
+        await _http!.get('/movie/popular', query: {'page': page});
+
+    if (response.statusCode == 200) {
+      Map data = response.data;
+      List<Movie> movies = data['results'].map<Movie>((movieData) {
+        return Movie.fromJson(movieData);
+      }).toList();
+      return movies;
+    } else {
+      throw Exception('Couldn\'t load popular movies');
+    }
   }
 }

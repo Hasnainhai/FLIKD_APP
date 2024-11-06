@@ -143,13 +143,13 @@ class MainPage extends ConsumerWidget {
 
   Widget _categorySelectionWidget() {
     return DropdownButton(
+        value: _mainPageData.searchCategory,
+        dropdownColor: Colors.black54,
         underline: Container(),
         icon: const Icon(
           Icons.menu,
           color: Colors.white,
         ),
-        value: SearchCategory.popular,
-        dropdownColor: Colors.black54,
         items: const [
           DropdownMenuItem(
             value: SearchCategory.popular,
@@ -159,9 +159,9 @@ class MainPage extends ConsumerWidget {
             ),
           ),
           DropdownMenuItem(
-            value: SearchCategory.newItems,
+            value: SearchCategory.upComing,
             child: Text(
-              SearchCategory.newItems,
+              SearchCategory.upComing,
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -173,7 +173,9 @@ class MainPage extends ConsumerWidget {
             ),
           ),
         ],
-        onChanged: (value) {});
+        onChanged: (value) => value.toString().isNotEmpty
+            ? _mainPageDataController.updateSearchCategories(value.toString())
+            : null);
   }
 
   Widget _movieListViewWidget() {

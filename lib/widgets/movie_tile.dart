@@ -89,9 +89,8 @@ class MovieTile extends StatelessWidget {
     return Container(
       height: height,
       width: width * 0.35,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/bg.png'), fit: BoxFit.contain),
+      decoration: BoxDecoration(
+        image: DecorationImage(image: NetworkImage(movie.posterURL())),
       ),
     );
   }

@@ -49,7 +49,7 @@ class MovieTile extends StatelessWidget {
                   movie.name,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                   ),

@@ -17,8 +17,11 @@ class MainPageData {
         page = 1,
         searchCategory = SearchCategory.popular,
         searchText = '';
-  MainPageData copyWith(List<Movie>? movies, int? page, String? searchCategory,
-      String? searchText) {
+  MainPageData copyWith(
+      {required List<Movie> movies,
+      required int page,
+      required String searchCategory,
+      required String searchText}) {
     return MainPageData(
       movies: movies ?? this.movies,
       page: page ?? this.page,

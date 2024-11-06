@@ -14,6 +14,11 @@ class MainPageDataController extends StateNotifier<MainPageData> {
     try {
       List<Movie> _movies = [];
       _movies = await _movieServices.getPopularMovies(page: state.page);
+      state = state.copyWith(
+          movies: [...state.movies, ..._movies],
+          page: state.page + 1,
+          searchCategory: state.searchCategory,
+          searchText: state.searchText);
     } catch (e) {
       throw Exception('Error occure: $e');
     }

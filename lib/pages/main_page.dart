@@ -1,9 +1,17 @@
 import 'dart:ui';
+import 'package:flickd_app/models/main_page_data.dart';
 import 'package:flickd_app/models/movie.dart';
 import 'package:flickd_app/models/search_category.dart';
 import 'package:flickd_app/widgets/movie_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../controllers/main_page_data_controller.dart';
+
+final mainPageDataControllerProvider =
+    StateNotifierProvider<MainPageDataController, MainPageData>(
+  (ref) => MainPageDataController(),
+);
 
 // ignore: must_be_immutable
 class MainPage extends ConsumerWidget {
@@ -11,6 +19,8 @@ class MainPage extends ConsumerWidget {
   late double _devicewidth;
 
   late TextEditingController _searchTextFieldController;
+  late MainPageDataController _mainPageDataController;
+  late MainPageData _mainPageData;
 
   MainPage({super.key});
 
@@ -19,6 +29,12 @@ class MainPage extends ConsumerWidget {
     _deviceHeight = MediaQuery.of(context).size.height;
     _devicewidth = MediaQuery.of(context).size.width;
     _searchTextFieldController = TextEditingController();
+
+    // Access mainPageDataController state notifier
+    _mainPageDataController =
+        ref.watch(mainPageDataControllerProvider.notifier);
+    // Access the MainPageData (state)
+    _mainPageData = ref.watch(mainPageDataControllerProvider);
 
     return _buildUI();
   }
@@ -161,19 +177,19 @@ class MainPage extends ConsumerWidget {
   }
 
   Widget _movieListViewWidget() {
-    List<Movie> _movies = [];
+    List<Movie> _movies = _mainPageData.movies;
 
-    for (var i = 0; i < 20; i++) {
-      _movies.add(Movie(
-          name: 'hasnain',
-          language: 'urdu',
-          isAdult: true,
-          description: 'hasna movie is a great movie you have to watch it once',
-          posterPath: 'assets/images/bg.png',
-          backdropPath: 'assets/images/bg.png',
-          rating: 7.7,
-          releaseDate: '20-1-23'));
-    }
+    // for (var i = 0; i < 20; i++) {
+    //   _movies.add(Movie(
+    //       name: 'hasnain',
+    //       language: 'urdu',
+    //       isAdult: true,
+    //       description: 'hasna movie is a great movie you have to watch it once',
+    //       posterPath: 'assets/images/bg.png',
+    //       backdropPath: 'assets/images/bg.png',
+    //       rating: 7.7,
+    //       releaseDate: '20-1-23'));
+    // }
 
     if (_movies.isNotEmpty) {
       return ListView.builder(

@@ -44,12 +44,12 @@ class MovieTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: width * 0.56,
+                width: width * 0.50,
                 child: Text(
                   movie.name,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: Colors.white,
                     fontWeight: FontWeight.w400,
                   ),
@@ -58,7 +58,7 @@ class MovieTile extends StatelessWidget {
               Text(
                 movie.rating.toString(),
                 style: const TextStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   color: Colors.white,
                 ),
               ),
@@ -75,7 +75,7 @@ class MovieTile extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(0, height * 0.02, 0, 0),
             child: Text(
               movie.description,
-              maxLines: 9,
+              maxLines: 6,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontSize: 10, color: Colors.white70),
             ),

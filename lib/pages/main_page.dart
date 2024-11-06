@@ -35,6 +35,7 @@ class MainPage extends ConsumerWidget {
         ref.watch(mainPageDataControllerProvider.notifier);
     // Access the MainPageData (state)
     _mainPageData = ref.watch(mainPageDataControllerProvider);
+    _searchTextFieldController.text = _mainPageData.searchText;
 
     return _buildUI();
   }
@@ -137,6 +138,7 @@ class MainPage extends ConsumerWidget {
           ),
           border: border,
         ),
+        onSubmitted: (input) => _mainPageDataController.updateTextSearch(input),
       ),
     );
   }

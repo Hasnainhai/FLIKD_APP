@@ -26,10 +26,9 @@ class MainPageDataController extends StateNotifier<MainPageData> {
         _movies = await _movieServices.searchMovies(state.searchText);
       }
       state = state.copyWith(
-          movies: [...state.movies, ..._movies],
-          page: state.page + 1,
-          searchCategory: state.searchCategory,
-          searchText: state.searchText);
+        movies: [...state.movies, ..._movies],
+        page: state.page + 1,
+      );
     } catch (e) {
       throw Exception('Error occure: $e');
     }
@@ -47,11 +46,7 @@ class MainPageDataController extends StateNotifier<MainPageData> {
 
   void updateTextSearch(String searchText) async {
     try {
-      state = state.copyWith(
-          movies: [],
-          page: 1,
-          searchCategory: SearchCategory.none,
-          searchText: searchText);
+      state = state.copyWith(movies: [], page: 1, searchText: searchText);
       getMovies();
     } catch (e) {
       print('$e');

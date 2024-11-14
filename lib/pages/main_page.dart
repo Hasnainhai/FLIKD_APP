@@ -12,6 +12,10 @@ final mainPageDataControllerProvider =
     StateNotifierProvider<MainPageDataController, MainPageData>(
   (ref) => MainPageDataController(),
 );
+final selectedMoviePosterURL = StateProvider<String?>((ref) {
+  final _movie = ref.watch(mainPageDataControllerProvider).movies;
+  return _movie.length != 0 ? _movie[0].posterURL() : null;
+});
 
 // ignore: must_be_immutable
 class MainPage extends ConsumerWidget {
@@ -21,8 +25,7 @@ class MainPage extends ConsumerWidget {
   late TextEditingController _searchTextFieldController;
   late MainPageDataController _mainPageDataController;
   late MainPageData _mainPageData;
-
-  MainPage({super.key});
+  var _selectedMoviePosterUrl;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,6 +39,7 @@ class MainPage extends ConsumerWidget {
     // Access the MainPageData (state)
     _mainPageData = ref.watch(mainPageDataControllerProvider);
     _searchTextFieldController.text = _mainPageData.searchText;
+    _selectedMoviePosterUrl = ref.watch(selectedMoviePosterURL.state);
 
     return _buildUI();
   }
@@ -60,24 +64,33 @@ class MainPage extends ConsumerWidget {
   }
 
   Widget _backgroundWidget() {
-    return Container(
-      height: _deviceHeight,
-      width: _devicewidth,
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/bg.png'), fit: BoxFit.cover),
-      ),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
-        child: Container(
-          height: _deviceHeight,
-          width: _devicewidth,
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.2),
+    if (selectedMoviePosterURL.state != null) {
+      return Container(
+        height: _deviceHeight,
+        width: _devicewidth,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: NetworkImage(_selectedMoviePosterUrl.state.toString()),
+              fit: BoxFit.cover),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
+          child: Container(
+            height: _deviceHeight,
+            width: _devicewidth,
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.2),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Container(
+        height: _deviceHeight,
+        width: _devicewidth,
+        color: Colors.black,
+      );
+    }
   }
 
   Widget _foregroundWidgets() {
@@ -182,7 +195,6 @@ class MainPage extends ConsumerWidget {
 
   Widget _movieListViewWidget() {
     List<Movie> _movies = _mainPageData.movies;
-
     // for (var i = 0; i < 20; i++) {
     //   _movies.add(Movie(
     //       name: 'hasnain',
@@ -194,7 +206,6 @@ class MainPage extends ConsumerWidget {
     //       rating: 7.7,
     //       releaseDate: '20-1-23'));
     // }
-
     if (_movies.isNotEmpty) {
       return NotificationListener(
         onNotification: (_onScrollNotifications) {
@@ -216,6 +227,9 @@ class MainPage extends ConsumerWidget {
                 padding: EdgeInsets.symmetric(
                     vertical: _deviceHeight * 0.01, horizontal: 0),
                 child: GestureDetector(
+                  onTap: () {
+                    _selectedMoviePosterUrl.state = _movies[_count].posterURL();
+                  },
                   child: MovieTile(
                       movie: _movies[_count],
                       height: _deviceHeight * 0.20,

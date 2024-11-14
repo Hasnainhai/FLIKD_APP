@@ -196,20 +196,34 @@ class MainPage extends ConsumerWidget {
     // }
 
     if (_movies.isNotEmpty) {
-      return ListView.builder(
-          itemCount: _movies.length,
-          itemBuilder: (BuildContext context, int _count) {
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: _deviceHeight * 0.01, horizontal: 0),
-              child: GestureDetector(
-                child: MovieTile(
-                    movie: _movies[_count],
-                    height: _deviceHeight * 0.20,
-                    width: _devicewidth * 0.85),
-              ),
-            );
-          });
+      return NotificationListener(
+        onNotification: (_onScrollNotifications) {
+          if (_onScrollNotifications is ScrollEndNotification) {
+            final before = _onScrollNotifications.metrics.extentBefore;
+            final max = _onScrollNotifications.metrics.maxScrollExtent;
+            if (before == max) {
+              _mainPageDataController.getMovies();
+              return true;
+            }
+            return false;
+          }
+          return false;
+        },
+        child: ListView.builder(
+            itemCount: _movies.length,
+            itemBuilder: (BuildContext context, int _count) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: _deviceHeight * 0.01, horizontal: 0),
+                child: GestureDetector(
+                  child: MovieTile(
+                      movie: _movies[_count],
+                      height: _deviceHeight * 0.20,
+                      width: _devicewidth * 0.85),
+                ),
+              );
+            }),
+      );
     } else {
       return const Center(
         child: CircularProgressIndicator(

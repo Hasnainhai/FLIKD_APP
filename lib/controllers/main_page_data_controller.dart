@@ -37,7 +37,10 @@ class MainPageDataController extends StateNotifier<MainPageData> {
   void updateSearchCategories(String category) async {
     try {
       state = state.copyWith(
-          movies: [], page: 1, searchCategory: category, searchText: '');
+        movies: [],
+        page: 1,
+        searchCategory: category,
+      );
       getMovies();
     } catch (e) {
       print('$e');
